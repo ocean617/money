@@ -95,14 +95,17 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
            //从卡上扣款,同时加同额积分  
            if (pfrm.orderState<>'免单') then
              begin
-              exeSql('update TB_MEMBERS set MMONEY=MMONEY-'+floattostr(pfrm.order_qy.FieldByName('OSPAYTYPESUM').AsFloat)+' where MCID='''+pfrm.RzDBEdit9.Text+'''');
-              exeSql('update TB_MEMBERS set MJF=IFNULL(MJF,0)+'+floattostr(pfrm.order_qy.FieldByName('OSPAYTYPESUM').AsFloat)+' where MCID='''+pfrm.RzDBEdit9.Text+'''');
+              exeSql('update TB_MEMBERS set MMONEY=MMONEY-'+floattostr(tmpvalue)+' where MCID='''+pfrm.RzDBEdit9.Text+'''');
+              exeSql('update TB_MEMBERS set MJF=IFNULL(MJF,0)+'+floattostr(tmpvalue)+' where MCID='''+pfrm.RzDBEdit9.Text+'''');
              end;
 
 
            //得到上次消费余额
-           last_banlance := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ pfrm.RzDBEdit9.Text+''' order by MDATE desc limit 1');
-
+           //last_banlance := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ pfrm.RzDBEdit9.Text+''' order by MDATE desc limit 1');
+             //读基本资料里面的余额
+           //last_banlance := getCount('select MMONEY as scount from tb_members where MCID='''+ pfrm.RzDBEdit9.Text+''' ');
+           last_banlance := scount;
+           
            //更新消费记录
            orders_qry:=Tzquery.Create(self);
            orders_qry.Connection:=mainfrm.conn;
@@ -190,12 +193,14 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
            //从卡上扣款,同时加同额积分  
            if (pfrm.orderState<>'免单') then
              begin
-              exeSql('update TB_MEMBERS set MMONEY=MMONEY-'+floattostr(pfrm.order_qy.FieldByName('OSPAYTYPE1SUM').AsFloat)+' where MCID='''+pfrm.RzDBEdit1.Text+'''');
-              exeSql('update TB_MEMBERS set MJF=IFNULL(MJF,0)+'+floattostr(pfrm.order_qy.FieldByName('OSPAYTYPE1SUM').AsFloat)+' where MCID='''+pfrm.RzDBEdit1.Text+'''');
+              exeSql('update TB_MEMBERS set MMONEY=MMONEY-'+floattostr(tmpvalue)+' where MCID='''+pfrm.RzDBEdit1.Text+'''');
+              exeSql('update TB_MEMBERS set MJF=IFNULL(MJF,0)+'+floattostr(tmpvalue)+' where MCID='''+pfrm.RzDBEdit1.Text+'''');
              end;
 
               //得到上次消费余额
-           last_banlance1 := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ pfrm.RzDBEdit1.Text+''' order by MDATE desc limit 1');
+           //last_banlance1 := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ pfrm.RzDBEdit1.Text+''' order by MDATE desc limit 1');
+           //读基本资料里面的余额
+           last_banlance1 := getCount('select MMONEY as scount from tb_members where MCID='''+ pfrm.RzDBEdit1.Text+''' ');
 
            //更新消费记录
            orders_qry:=Tzquery.Create(self);

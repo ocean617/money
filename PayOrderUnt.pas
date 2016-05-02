@@ -471,12 +471,6 @@ last_banlance1 :=0.0;
 tmpstr :='';
 tmpstr1 :='';
 
-{ if ((StrToFloat(RzDBEdit5.Text)+ StrToFloat(RzDBEdit8.Text))<>StrToFloat(total_edt.Text)) then
-       begin
-         showmessage('付款金额不等于总额，不能结账.');
-         Exit;
-       end;   }
-       
 if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) then
   begin
     try
@@ -486,7 +480,9 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
      if ((OrderpayTypeCmb.ItemIndex=2) and (order_qy.FieldByName('OSPAYTYPESUM').AsFloat>0)) then
         begin
            //得到上次消费余额
-           last_banlance := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ RzDBEdit9.Text+''' order by MDATE desc limit 1');
+           //last_banlance := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ RzDBEdit9.Text+''' order by MDATE desc limit 1');
+           //读基本资料里面的余额
+           last_banlance := getCount('select MMONEY as scount from tb_members where MCID='''+ RzDBEdit9.Text+''' ');
 
            member_qry:=Tzquery.Create(self);
            member_qry.Connection:=mainfrm.conn;
@@ -549,7 +545,9 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
      if ((OrderpayTypeCmb1.ItemIndex=2) and (order_qy.FieldByName('OSPAYTYPE1SUM').AsFloat>0)) then
         begin
             //得到上次消费余额
-           last_banlance1 := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ RzDBEdit1.Text+''' order by MDATE desc limit 1');
+           //last_banlance1 := getCount('select MBALANCE as scount from tb_member_paylog where MCID='''+ RzDBEdit1.Text+''' order by MDATE desc limit 1');
+           //读基本资料里面的余额
+           last_banlance1 := getCount('select MMONEY as scount from tb_members where MCID='''+ RzDBEdit1.Text+''' ');
 
            member_qry:=Tzquery.Create(self);
            member_qry.Connection:=mainfrm.conn;
@@ -751,6 +749,12 @@ var
  i:integer;
 begin
 if not RzDBEdit6.DataSource.DataSet.Active then exit;
+if ((length(RzDBEdit5.Text)=0) and (length(RzDBEdit8.Text)=0)) then
+  begin
+    messagebox(0,'结帐金额不能为空.','提示',mb_iconinformation);
+    exit;
+  end;
+
 if comm_order_qy.RecordCount=0 then
   begin
     messagebox(0,'该单不是团体单，请直接结帐即可.','提示',mb_iconinformation);
