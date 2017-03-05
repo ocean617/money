@@ -95,6 +95,7 @@ type
     procedure InTime_1Change(Sender: TObject);
     procedure SaveNextComm_btClick(Sender: TObject);
     procedure CommChkClick(Sender: TObject);
+    procedure TjItem_1Change(Sender: TObject);
   private
      oid:string;
      procedure opends(qry:tzreadonlyquery;sql:string);
@@ -178,7 +179,10 @@ begin
       OPCOUNT_edt.SetFocus;
       exit;
     end;
-  if length(item_1.Text)=0 then
+  if ((length(item_1.Text)=0) and
+     (length(item_2.Text)=0) and
+     (length(item_3.Text)=0) and
+     (length(item_4.Text)=0) )then
     begin
       messagebox(0,'请至少输入一个消费项目.','提示',mb_iconinformation);
       item_1.SetFocus;
@@ -207,7 +211,7 @@ begin
        RoomCmb:=self.FindComponent('Room_'+inttostr(i)) as TComboBox;
        InTimeCmb:=self.FindComponent('InTime_'+inttostr(i)) as TComboBox;
 
-       if (length(trim(ItemCmb.Text)))=0 then break;
+       if (length(trim(ItemCmb.Text)))=0 then continue;
        AStrings.Clear;
        ExtractStrings([' '], ['#', '.'], pchar(ItemCmb.Text),AStrings);
        if AStrings.Count<>2 then continue;
@@ -250,7 +254,7 @@ begin
        TjCountCmb:=self.FindComponent('TjCount_'+inttostr(i)) as TComboBox;
        TjNameCmb:=self.FindComponent('TjName_'+inttostr(i)) as TComboBox;
        
-       if (length(trim(TjItemCmb.Text)))=0 then break;
+       if (length(trim(TjItemCmb.Text)))=0 then continue;
        AStrings.Clear;
        ExtractStrings([' '], ['#', '.'], pchar(TjItemCmb.Text),AStrings);
        if AStrings.Count<>2 then continue;
@@ -328,7 +332,7 @@ begin
   lst:=Tstringlist.Create;
   qry:=TzReadonlyquery.Create(nil);
   qry.Connection:=mainfrm.conn;
-  
+
   opends(qry,'select SCODE,SITEMNAME,SITEMKIND from TB_BASE_SERVICEITEM order by SCODE ');
   while not qry.Eof do
    begin
@@ -387,6 +391,59 @@ begin
 if  CommChk.Checked then
   CommNum_edt.Text:= 'T'+getNextSeqNum('commorder');
   
+end;
+
+procedure TNewOrderFrm.TjItem_1Change(Sender: TObject);
+var
+  qry:TZQuery;
+  scode,itemText,tjcodes:string;
+  AStrings: TStringList;
+  obj:TComboBox;
+  j,i:integer;
+begin
+  if (length((sender as Tcombobox).Text)<=0) then exit;
+  AStrings := TStringList.Create;
+  ExtractStrings([' '], ['#', '.'], pchar((sender as Tcombobox).Text),AStrings);
+  scode :=   trim(Astrings[0]);
+
+  if (length(trim(Astrings[0]))>0) then
+    begin
+        qry:= TZQuery.Create(nil);
+        qry.Connection:=mainfrm.conn;
+        qry.SQL.Clear;
+        qry.SQL.Add('select TJSCODES from tb_base_serviceitem where SCODE ="'+scode+'"');
+        qry.Open;
+
+        tjcodes:= qry.fieldByname('TJSCODES').AsString;
+        if ((qry.RecordCount>0) and (length(tjcodes)>0)) then
+           begin
+              qry.Close;
+              qry.SQL.Clear;
+              qry.SQL.Add('select * from tb_base_serviceitem where scode in ('+tjcodes+')');
+              qry.Open;
+              
+              while not qry.Eof do
+                 begin
+                   for i:=1 to 10 do
+                      begin
+                        obj:=(self.FindComponent('Item_'+inttostr(i)) as TComboBox);
+                        itemText :=obj.Text;
+                        if(length(itemText)>0) then continue;
+                        obj.ItemIndex:= obj.Items.IndexOf(qry.fieldbyname('SCODE').AsString+' '+qry.fieldbyname('SITEMNAME').AsString);
+                        break;
+                     end;
+                     
+                   qry.Next;
+
+                 end;
+              qry.Close;
+           end;
+
+          qry.Free;
+
+    end;
+
+
 end;
 
 end.

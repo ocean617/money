@@ -1805,10 +1805,10 @@ object MemberManagerFrm: TMemberManagerFrm
     Top = 69
     Width = 958
     Height = 516
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     DragIndicatorColor = 5263440
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 1
     TabStyle = tsRoundCorners
     FixedDimension = 18

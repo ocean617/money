@@ -5,19 +5,22 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, RzTabs, DataLstFrameUnt, DB, ZAbstractRODataset,
-  ZAbstractDataset, ZDataset, RzButton;
+  ZAbstractDataset, ZDataset, RzButton, StdCtrls, DBGridEhGrouping,
+  GridsEh, DBGridEh, ExtCtrls, DBCtrls;
 
 type
   TfrmServiceProject = class(TForm)
     ds_service: TDataSource;
     zquery_service: TZQuery;
     dataLstFrame1: TdataLstFrame;
+    RzBitBtn1: TRzBitBtn;
     procedure dataLstFrame1btn_deleteClick(Sender: TObject);
     procedure dataLstFrame1btn_addClick(Sender: TObject);
     procedure dataLstFrame1jobs_gridDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure RzBitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +33,7 @@ var
 implementation
 
 uses mainUnt, personAddUser, serviceAddService, loginUnt, commUnt,
-  serviceAddGroup, groupServiceList;
+  serviceAddGroup, groupServiceList, serviceReportKindSettings;
 
 {$R *.dfm}
 
@@ -135,6 +138,16 @@ procedure TfrmServiceProject.FormKeyPress(Sender: TObject; var Key: Char);
 begin
  if integer(Key)=27 then
    close;
+end;
+
+procedure TfrmServiceProject.RzBitBtn1Click(Sender: TObject);
+var
+ frm:TfrmServiceReportKindSettings;
+begin
+  frm:=TfrmServiceReportKindSettings.Create(nil);
+  frm.ShowModal;
+  frm.Free;
+
 end;
 
 end.

@@ -320,6 +320,9 @@ end;
 
 procedure Tmainfrm.hit_labClick(Sender: TObject);
 begin
+
+show_birthday_pane.Top:=268;
+show_birthday_pane.Left:=260;
 show_birthday_pane.Show;
 end;
 

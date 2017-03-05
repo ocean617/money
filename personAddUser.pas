@@ -20,7 +20,6 @@ type
     upwd: TRzEdit;
     usurepwd: TRzEdit;
     utype: TDBComboBoxEh;
-    AdvFocusHelper1: TAdvFocusHelper;
     procedure RzBitBtn1Click(Sender: TObject);
     procedure RzBitBtn2Click(Sender: TObject);
   private

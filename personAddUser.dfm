@@ -160,21 +160,13 @@ object frm_person_userAdd: Tfrm_person_userAdd
       DataSource = frm_person.ds_user
       EditButtons = <>
       Items.Strings = (
+        #24635#32463#29702
         #31649#29702#21592
-        #25910#38134#21592
         #36130#21153
-        #24635#32463#29702)
+        #37096#38271
+        #25910#38134#21592)
       TabOrder = 3
       Visible = True
     end
-  end
-  object AdvFocusHelper1: TAdvFocusHelper
-    Color = clRed
-    ExcludeControls = []
-    IncludeControls = []
-    Opacity = 230
-    Version = '1.1.0.0'
-    Left = 260
-    Top = 80
   end
 end

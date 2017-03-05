@@ -32,7 +32,8 @@ uses
   report4_thd_unt in 'report4_thd_unt.pas',
   report5_thd_unt in 'report5_thd_unt.pas',
   report6_thd_unt in 'report6_thd_unt.pas',
-  changePayRecord in 'changePayRecord.pas' {frm_changePay};
+  changePayRecord in 'changePayRecord.pas' {frm_changePay},
+  serviceReportKindSettings in 'serviceReportKindSettings.pas' {frmServiceReportKindSettings};
 
 {$R *.res}
 

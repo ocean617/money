@@ -1,9 +1,9 @@
 object mainfrm: Tmainfrm
-  Left = 300
-  Top = 48
+  Left = 294
+  Top = 55
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
-  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20160502)'
+  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20170304)'
   ClientHeight = 600
   ClientWidth = 800
   Color = clBtnFace
@@ -16521,7 +16521,7 @@ object mainfrm: Tmainfrm
     Top = 580
     Width = 154
     Height = 14
-    Caption = #26368#21518#26356#26032#26085#26399#65306'20160502'
+    Caption = #26368#21518#26356#26032#26085#26399#65306'20170304'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -14
@@ -16549,8 +16549,8 @@ object mainfrm: Tmainfrm
     UnvisitedColor = 9061632
   end
   object show_birthday_pane: TRzPanel
-    Left = 268
-    Top = 260
+    Left = 396
+    Top = 584
     Width = 449
     Height = 317
     Color = 16777164

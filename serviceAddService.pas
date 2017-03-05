@@ -38,6 +38,10 @@ type
     Label15: TLabel;
     RzDBNumericEdit6: TRzDBNumericEdit;
     Label16: TLabel;
+    Label17: TLabel;
+    RzDBNumericEdit7: TRzDBNumericEdit;
+    RzDBMemo1: TRzDBMemo;
+    Label18: TLabel;
     procedure RzBitBtn1Click(Sender: TObject);
     procedure RzBitBtn2Click(Sender: TObject);
   private

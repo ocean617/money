@@ -106,8 +106,8 @@ begin
       mainfrm.title_label.Caption := '欢迎您的登录,'+mainfrm.user_name;
       
       //进行权限判断
-      if (mainfrm.user_type='收银员') then
-         begin
+      if ((mainfrm.user_type='收银员') or (mainfrm.user_type='部长')) then
+         begin  
            mainfrm.CheckOrder_bt.Enabled:=false;
            mainfrm.Members_bt.Enabled:=false;
            mainfrm.CWReport_bt.Enabled:=false;
@@ -116,6 +116,7 @@ begin
            mainfrm.serviceItem_bt.Enabled:=false;
            mainfrm.sMember_bt.Enabled:=false;
          end
+
       else if  (mainfrm.user_type='财务') then
          begin
            mainfrm.NewPay_bt.Enabled:=false;

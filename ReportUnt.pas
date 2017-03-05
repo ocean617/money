@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RzPanel, RzButton, StdCtrls, Mask, RzEdit,comObj,DateUtils,ZAbstractRODataset,
   ZAbstractDataset, ZDataset, DBGridEhGrouping, DB, GridsEh, DBGridEh,
-  DBCtrlsEh, RzPrgres;
+  DBCtrlsEh, RzPrgres,shellapi;
 
 type
   TReportFrm = class(TForm)
@@ -98,11 +98,33 @@ end;
 
 procedure TReportFrm.r1_btClick(Sender: TObject);
 var 
-  th:report1_thd;
+  //th:report1_thd;
+  strState:string;
+  url:string;
 begin
-  th:=report1_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+
+if length(date_begin.Text)=0 then
+  begin
+   showmessage('请选择开始日期');
+   exit;
+  end;
+
+if length(date_end.Text)=0 then
+  begin
+   showmessage('请选择结束日期');
+   exit;
+  end;
+
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r1.do?state='+strState+'&sdate='+date_begin.Text+'&edate='+date_end.Text;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
+
+//  th:=report1_thd.Create(true);
+//  th.frm:=self;
+//  th.Resume;
 end;
 
 procedure TReportFrm.FormCreate(Sender: TObject);
@@ -167,51 +189,106 @@ end;
 
 procedure TReportFrm.r2_btClick(Sender: TObject);
 var 
-  th:report2_thd;
+  //th:report1_thd;
+  strState:string;
+  url:string;
 begin
-  th:=report2_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+
+if length(date_begin.Text)=0 then
+  begin
+   showmessage('请选择开始日期');
+   exit;
+  end;
+
+if length(date_end.Text)=0 then
+  begin
+   showmessage('请选择结束日期');
+   exit;
+  end;
+
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r2.do?state='+strState+'&sdate='+date_begin.Text+'&edate='+date_end.Text;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
 
 end;
 
 procedure TReportFrm.r3_btClick(Sender: TObject);
 var 
-  th:report3_thd;
+  //th:report1_thd;
+  strState:string;
+  url:string;
 begin
-  th:=report3_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r3.do?state='+strState+'&year='+r3_year_cmb.Text+'&month='+r3_month.Text;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
 
 end;
 
 procedure TReportFrm.r4_btClick(Sender: TObject);
-var 
-  th:report4_thd;
+var
+  strState:string;
+  url:string;
+  enum:String;
 begin
-  th:=report4_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+
+   if length(js_cmb.Text)=0 then
+  begin
+    messagebox(0,'请选择技师.','提示',mb_iconinformation);
+    exit;
+  end;
+  enum:=trim(copy(js_cmb.Text,0,pos(' ',js_cmb.Text)));
+  
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r4.do?state='+strState+'&year='+r4_year_cmb.Text+'&month='+r4_month.Text+'&empno='+enum;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
 
 end;
 
 procedure TReportFrm.r5_btClick(Sender: TObject);
-var 
-  th:report5_thd;
+var
+  strState:string;
+  url:string;
 begin
-  th:=report5_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r5.do?state='+strState+'&year='+r5_year_cmb.Text+'&month='+r5_month.Text;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
 
 end;
 
 procedure TReportFrm.r6_btClick(Sender: TObject);
-var 
-  th:report6_thd;
+var
+  strState:string;
+  nextmonth,url,sdate,edate:string;
 begin
-  th:=report6_thd.Create(true);
-  th.frm:=self;
-  th.Resume;
+   if mainfrm.user_type='收银员' then
+  strState:='0'
+else
+  strState:='1';
+  if (strtoint(r6_month.Text)+1)<10 then
+    nextmonth := '0'+inttostr(strtoint(r6_month.Text)+1)
+  else
+    nextmonth := inttostr(strtoint(r6_month.Text)+1);
+
+  sdate := r6_year_cmb.Text+'-'+r6_month.Text+'-01';
+  edate := r6_year_cmb.Text+'-'+nextmonth+'-01';
+
+  url:='http://'+mainfrm.reg.ReadString('money','ip','')+':8080/money/r6.do?state='+strState+'&sdate='+sdate+'&edate='+edate;
+  ShellExecute(Application.Handle, nil, pchar(url), nil, nil, SW_SHOWNORMAL);
+
 
 end;
 

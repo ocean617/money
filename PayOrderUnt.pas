@@ -106,6 +106,27 @@ type
     Label3: TLabel;
     comm_total_edt: TEdit;
     Label4: TLabel;
+    changeAmoutBt: TRzBitBtn;
+    amout_change_panel: TRzPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    uedt: TComboBox;
+    passedt: TRzEdit;
+    newAmount_edt: TRzEdit;
+    RzBitBtn1: TRzBitBtn;
+    memberCardQueryBtn: TRzBitBtn;
+    member_card_query_panel: TRzPanel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    uedt1: TComboBox;
+    passedt1: TRzEdit;
+    phone_edt: TRzEdit;
+    RzBitBtn2: TRzBitBtn;
+    Label11: TLabel;
+    cardnum_edt: TRzEdit;
+    RzBitBtn3: TRzBitBtn;
     procedure SaveOrder_btClick(Sender: TObject);
     procedure qry_btClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -133,6 +154,11 @@ type
     procedure order_qyBeforePost(DataSet: TDataSet);
     procedure RzDBEdit5KeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure changeAmoutBtClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure memberCardQueryBtnClick(Sender: TObject);
+    procedure RzBitBtn2Click(Sender: TObject);
+    procedure RzBitBtn3Click(Sender: TObject);
   private
     //计算实际消费总额
     procedure CalcTotal();
@@ -140,6 +166,8 @@ type
     procedure getAllOrders();
     //读取项目和技师
     procedure getAllItemsAndJs();
+    //读取非收银类型的用户列表
+    procedure readUsers2List();
   public
     orderState:string;
     { Public declarations }
@@ -412,6 +440,7 @@ end;
 
 procedure TPayOrderFrm.FormCreate(Sender: TObject);
 begin
+  changeAmoutBt.Hide;
   orderState:='结单';
 // openqy(js_qy,'select * from TB_EMPLOYEE order by ENUM');
 // openqy(sItem_qy,'select * from TB_BASE_SERVICEITEM where SITEMKIND=''推荐项目'' order by SCODE');
@@ -419,6 +448,17 @@ begin
  getAllOrders;
  getAllItemsAndJs;
  updateZdLabel;
+
+ //读取非收银员名称列表
+ readUsers2List;
+
+ //收银员不能修改消费总额
+ if mainfrm.user_type = '收银员' then
+   begin
+     total_edt.ReadOnly:=true;
+     changeAmoutBt.Show;
+   end;
+ 
 end;
 
 procedure TPayOrderFrm.tj_add_btClick(Sender: TObject);
@@ -461,9 +501,22 @@ var
  fileId,sfilename,tfilename,tmpstr,tmpstr1:string;
  last_banlance,last_banlance1:Real;
  i:integer;
- tmpvalue:real;
+ tmpvalue,totalsum:real;
 begin
 if not RzDBEdit6.DataSource.DataSet.Active then exit;
+//先保存
+try
+if order_qy.state in [dsEdit,dsInsert] then
+    order_qy.Post;
+
+ //计算该单的团体总额
+  totalsum:= getCount('select round(sum(OSSKCOUNT),2) scount from TB_ORDER where OCOMMID='''+order_qy.FieldByName('OCOMMID').AsString+'''');
+  comm_total_edt.Text := FloatToStr(totalsum);
+         
+order_qy.Edit;
+except
+end;
+
 //上次消费余额
 last_banlance :=0.0;
 last_banlance1 :=0.0;
@@ -612,7 +665,7 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
      order_qy.FieldByName('OSYID').AsString:=mainfrm.user_id;
      order_qy.FieldByName('OSYNAME').AsString:=mainfrm.user_name;
      order_qy.FieldByName('OSYJDDATE').AsDateTime:=now();
-     
+
      //采用了付款方式1或2
      if ((OrderpayTypeCmb1.ItemIndex=2) and (order_qy.FieldByName('OSPAYTYPESUM').AsFloat>0)) then
        order_qy.FieldByName('MCID').AsString:=RzDBEdit9.Text;
@@ -1068,6 +1121,167 @@ begin
 
   RzDBEdit8.Text:=floattostr(strtofloat(comm_total_edt.text)-strtofloat(RzDBEdit5.text));
 }
+end;
+
+procedure TPayOrderFrm.changeAmoutBtClick(Sender: TObject);
+begin
+//由部长修改消费金额
+amout_change_panel.Show;
+
+end;
+
+procedure TPayOrderFrm.RzBitBtn1Click(Sender: TObject);
+var
+  qry:Tzquery;
+begin
+//用户名密码判断
+ if (length(trim(passedt.Text))<=0) then
+   begin
+    messagebox(0,'请输入密码.','提示',mb_iconinformation);
+    passedt.SetFocus;
+    exit;
+   end;
+   
+ if (length(trim(newAmount_edt.Text))<=0) then
+   begin
+    messagebox(0,'请输入金额.','提示',mb_iconinformation);
+    newAmount_edt.SetFocus;
+    exit;
+   end;
+   
+//检查用户名和密码是否正确
+  qry:=Tzquery.Create(self);
+  qry.Connection:=mainfrm.conn;
+  qry.SQL.Add('select * from TB_USERS where UNAME=:u and UPASS=:p ' );
+  
+  qry.ParamByName('u').AsString:=trim(uedt.Text);
+  qry.ParamByName('p').AsString:=trim(passedt.Text);
+
+  try
+   qry.Open;
+ except
+   begin
+     messagebox(0,'数据查询出错,有可能是数据库未启动或缺少连接库.请联系管理员.','提示',mb_iconerror);
+     qry.Free;
+     exit;
+   end;
+ end;
+
+ if (qry.IsEmpty) then
+    begin
+     messagebox(0,'您的用户名或密码错误,请重新输入.','提示',mb_iconerror);
+     passedt.SetFocus;
+     qry.Close;
+     qry.Free;
+     exit;
+    end;
+ 
+passedt.Text:='';
+total_edt.Text:=newAmount_edt.Text;
+amout_change_panel.hide;
+
+end;
+
+procedure TPayOrderFrm.readUsers2List;
+var
+  qry:Tzquery;
+begin
+  qry:=Tzquery.Create(self);
+  qry.Connection:=mainfrm.conn;
+  qry.SQL.Add('select * from TB_users where UTYPE<>"收银员" ' );
+  qry.Open;
+  uedt.Clear;
+  while not qry.Eof do
+    begin
+      uedt.Items.Add(qry.fieldbyname('UNAME').AsString);
+      uedt1.Items.Add(qry.fieldbyname('UNAME').AsString);      
+      qry.next;
+    end;
+  qry.Free;
+
+end;
+
+procedure TPayOrderFrm.memberCardQueryBtnClick(Sender: TObject);
+begin
+member_card_query_panel.Show;
+end;
+
+procedure TPayOrderFrm.RzBitBtn2Click(Sender: TObject);
+begin
+  passedt1.Clear;
+  member_card_query_panel.hide;
+end;
+
+procedure TPayOrderFrm.RzBitBtn3Click(Sender: TObject);
+var
+  qry:Tzquery;
+begin
+//用户名密码判断
+ if (length(trim(passedt1.Text))<=0) then
+   begin
+    messagebox(0,'请输入密码.','提示',mb_iconinformation);
+    passedt1.SetFocus;
+    exit;
+   end;
+   
+ if (length(trim(phone_edt.Text))<=0) then
+   begin
+    messagebox(0,'请输入会员手机号码.','提示',mb_iconinformation);
+    phone_edt.SetFocus;
+    exit;
+   end;
+   
+//检查用户名和密码是否正确
+  qry:=Tzquery.Create(self);
+  qry.Connection:=mainfrm.conn;
+  qry.SQL.Add('select * from TB_USERS where UNAME=:u and UPASS=:p ' );
+  
+  qry.ParamByName('u').AsString:=trim(uedt1.Text);
+  qry.ParamByName('p').AsString:=trim(passedt1.Text);
+
+  try
+   qry.Open;
+ except
+   begin
+     messagebox(0,'数据查询出错,有可能是数据库未启动或缺少连接库.请联系管理员.','提示',mb_iconerror);
+     qry.Free;
+     exit;
+   end;
+ end;
+
+ if (qry.IsEmpty) then
+    begin
+     messagebox(0,'您的用户名或密码错误,请重新输入.','提示',mb_iconerror);
+     passedt1.SetFocus;
+     qry.Close;
+     qry.Free;
+     exit;
+    end;
+ 
+passedt1.Text:='';
+//关闭查询
+if qry.Active then qry.Free;
+
+//根据手机号查询会员编号
+  qry:=Tzquery.Create(self);
+  qry.Connection:=mainfrm.conn;
+  qry.SQL.Add('select MCID from tb_members where MPHONE=:p limit 1' );
+  qry.ParamByName('p').AsString:=trim(phone_edt.Text);
+  qry.Open;
+  if qry.IsEmpty then
+    begin
+      messagebox(0,'根据该手机号未找到对应的会员编号.','提示',mb_iconerror);
+      qry.Free;
+      exit;
+    end
+  else
+    begin
+      cardnum_edt.Text:=qry.fieldbyname('MCID').AsString;
+      qry.Close;
+      qry.Free;
+    end;
+
+
 end;
 
 end.

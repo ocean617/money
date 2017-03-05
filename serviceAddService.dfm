@@ -1,8 +1,8 @@
 object frm_service_serviceAdd: Tfrm_service_serviceAdd
-  Left = 557
-  Top = 251
+  Left = 551
+  Top = 92
   Width = 358
-  Height = 389
+  Height = 525
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = #22522#26412#26381#21153#39033#30446#32534#36753
   Color = clBtnFace
@@ -16,8 +16,8 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
   PixelsPerInch = 96
   TextHeight = 12
   object RzBitBtn1: TRzBitBtn
-    Left = 72
-    Top = 318
+    Left = 76
+    Top = 434
     Default = True
     Caption = #20445#23384
     TabOrder = 1
@@ -76,8 +76,8 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     NumGlyphs = 2
   end
   object RzBitBtn2: TRzBitBtn
-    Left = 184
-    Top = 318
+    Left = 188
+    Top = 434
     Caption = #21462#28040
     TabOrder = 2
     OnClick = RzBitBtn2Click
@@ -87,7 +87,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     Left = 4
     Top = 4
     Width = 329
-    Height = 305
+    Height = 421
     Caption = #22522#26412#26381#21153#39033#30446#20449#24687
     TabOrder = 0
     object Label1: TLabel
@@ -106,42 +106,42 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object Label3: TLabel
       Left = 12
-      Top = 161
+      Top = 189
       Width = 72
       Height = 12
       Caption = #27599#38047#20250#21592#20215#65306
     end
     object Label4: TLabel
       Left = 12
-      Top = 192
+      Top = 220
       Width = 72
       Height = 12
       Caption = #27599#38047#30333#22825#20215#65306
     end
     object Label5: TLabel
       Left = 12
-      Top = 220
+      Top = 248
       Width = 72
       Height = 12
       Caption = #27599#38047#26202#19978#20215#65306
     end
     object Label6: TLabel
       Left = 292
-      Top = 161
+      Top = 189
       Width = 12
       Height = 12
       Caption = #20803
     end
     object Label7: TLabel
       Left = 293
-      Top = 190
+      Top = 218
       Width = 12
       Height = 12
       Caption = #20803
     end
     object Label8: TLabel
       Left = 293
-      Top = 217
+      Top = 245
       Width = 12
       Height = 12
       Caption = #20803
@@ -155,21 +155,21 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object Label10: TLabel
       Left = 12
-      Top = 108
+      Top = 136
       Width = 60
       Height = 12
       Caption = #39033#30446#31867#21035#65306
     end
     object Label11: TLabel
       Left = 12
-      Top = 246
+      Top = 274
       Width = 72
       Height = 12
       Caption = #27599#38047#36149#23486#20215#65306
     end
     object Label12: TLabel
       Left = 293
-      Top = 243
+      Top = 271
       Width = 12
       Height = 12
       Caption = #20803
@@ -183,24 +183,38 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object Label14: TLabel
       Left = 12
-      Top = 132
+      Top = 160
       Width = 60
       Height = 12
       Caption = #25253#34920#31867#21035#65306
     end
     object Label15: TLabel
       Left = 12
-      Top = 274
+      Top = 302
       Width = 72
       Height = 12
       Caption = #27599#38047#22242#36141#20215#65306
     end
     object Label16: TLabel
       Left = 293
-      Top = 271
+      Top = 299
       Width = 12
       Height = 12
       Caption = #20803
+    end
+    object Label17: TLabel
+      Left = 12
+      Top = 109
+      Width = 60
+      Height = 12
+      Caption = #26174#31034#24207#21495#65306
+    end
+    object Label18: TLabel
+      Left = 12
+      Top = 326
+      Width = 60
+      Height = 48
+      Caption = #23545#24212#26381#21153#39033#13#32534#30721#13#13#20197','#21495#38548#24320
     end
     object uname: TRzDBEdit
       Left = 91
@@ -224,7 +238,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object RzDBNumericEdit2: TRzDBNumericEdit
       Left = 91
-      Top = 155
+      Top = 183
       Width = 198
       Height = 20
       DataSource = frmServiceProject.ds_service
@@ -236,7 +250,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object RzDBNumericEdit3: TRzDBNumericEdit
       Left = 91
-      Top = 185
+      Top = 213
       Width = 198
       Height = 20
       DataSource = frmServiceProject.ds_service
@@ -248,7 +262,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object RzDBNumericEdit4: TRzDBNumericEdit
       Left = 91
-      Top = 215
+      Top = 243
       Width = 198
       Height = 20
       DataSource = frmServiceProject.ds_service
@@ -260,7 +274,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object DBComboBox1: TDBComboBox
       Left = 92
-      Top = 104
+      Top = 132
       Width = 197
       Height = 20
       DataField = 'SITEMKIND'
@@ -274,7 +288,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object RzDBNumericEdit5: TRzDBNumericEdit
       Left = 91
-      Top = 241
+      Top = 269
       Width = 198
       Height = 20
       DataSource = frmServiceProject.ds_service
@@ -295,7 +309,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object DBComboBox2: TDBComboBox
       Left = 92
-      Top = 128
+      Top = 156
       Width = 197
       Height = 20
       DataField = 'REPORTKIND'
@@ -325,7 +339,7 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
     end
     object RzDBNumericEdit6: TRzDBNumericEdit
       Left = 91
-      Top = 269
+      Top = 297
       Width = 198
       Height = 20
       DataSource = frmServiceProject.ds_service
@@ -334,6 +348,26 @@ object frm_service_serviceAdd: Tfrm_service_serviceAdd
       TabOrder = 9
       IntegersOnly = False
       DisplayFormat = '0.00'
+    end
+    object RzDBNumericEdit7: TRzDBNumericEdit
+      Left = 91
+      Top = 103
+      Width = 198
+      Height = 20
+      DataSource = frmServiceProject.ds_service
+      DataField = 'SNUM'
+      Alignment = taLeftJustify
+      TabOrder = 10
+      DisplayFormat = '0.00'
+    end
+    object RzDBMemo1: TRzDBMemo
+      Left = 92
+      Top = 324
+      Width = 197
+      Height = 89
+      DataField = 'TJSCODES'
+      DataSource = frmServiceProject.ds_service
+      TabOrder = 11
     end
   end
 end

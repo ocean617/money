@@ -42,6 +42,7 @@ object ReportFrm: TReportFrm
     Percent = 0
     ShowParts = True
     TotalParts = 0
+    Visible = False
   end
   object RzGroupBox1: TRzGroupBox
     Left = 4
@@ -692,9 +693,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 4
+      ItemIndex = 6
       TabOrder = 0
-      Text = '2014'
+      Text = '2016'
       Items.Strings = (
         '2013'
         '2010'
@@ -835,9 +836,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 0
+      ItemIndex = 6
       TabOrder = 1
-      Text = '2014'
+      Text = '2016'
       Items.Strings = (
         '2014'
         '2010'

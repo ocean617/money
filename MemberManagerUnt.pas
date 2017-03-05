@@ -135,6 +135,13 @@ procedure TMemberManagerFrm.FormCreate(Sender: TObject);
 begin
  wheresql:='';
 
+ //收银员不允许显示会员卡号
+ if mainfrm.user_type = '收银员' then
+   begin
+     grid.Columns[2].Visible:=false;
+     grid.Options := grid.Options +[dgRowSelect];
+   end;
+
 if mainfrm.user_type='总经理' then
  begin
   member_delbt.Show;

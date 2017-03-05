@@ -1,8 +1,8 @@
 object frmServiceProject: TfrmServiceProject
-  Left = 348
-  Top = 156
-  Width = 753
-  Height = 552
+  Left = 318
+  Top = 42
+  Width = 1023
+  Height = 645
   Caption = #26381#21153#39033#30446
   Color = clBtnFace
   Font.Charset = GB2312_CHARSET
@@ -20,8 +20,8 @@ object frmServiceProject: TfrmServiceProject
   inline dataLstFrame1: TdataLstFrame
     Left = 0
     Top = 0
-    Width = 737
-    Height = 514
+    Width = 1007
+    Height = 607
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -31,7 +31,7 @@ object frmServiceProject: TfrmServiceProject
     ParentFont = False
     TabOrder = 0
     inherited bg: TRzBackground
-      Width = 737
+      Width = 1007
     end
     inherited seImage1: TseImage
       Width = 60
@@ -1773,14 +1773,14 @@ object frmServiceProject: TfrmServiceProject
         00000049454E44AE426082}
     end
     inherited Bevel1: TBevel
-      Width = 737
+      Width = 1007
     end
     inherited Label1: TLabel
       Width = 72
       Caption = #22522#26412#26381#21153#39033#30446
     end
     inherited RzPanel1: TRzPanel
-      Width = 737
+      Width = 1007
       inherited RzToolbarButton1: TRzToolbarButton
         OnClick = dataLstFrame1btn_addClick
       end
@@ -1793,12 +1793,12 @@ object frmServiceProject: TfrmServiceProject
       end
     end
     inherited RzStatusBar1: TRzStatusBar
-      Top = 495
-      Width = 737
+      Top = 588
+      Width = 1007
     end
     inherited grid: TDBGridEh
-      Width = 737
-      Height = 389
+      Width = 1007
+      Height = 482
       DataSource = ds_service
       OnDblClick = dataLstFrame1jobs_gridDblClick
       Columns = <
@@ -1807,6 +1807,12 @@ object frmServiceProject: TfrmServiceProject
           FieldName = 'SCODE'
           Footers = <>
           Title.Caption = #32534#30721
+        end
+        item
+          EditButtons = <>
+          FieldName = 'SNUM'
+          Footers = <>
+          Title.Caption = #26174#31034#24207#21495
         end
         item
           EditButtons = <>
@@ -1838,30 +1844,42 @@ object frmServiceProject: TfrmServiceProject
           FieldName = 'SMEMBERPRICE'
           Footers = <>
           Title.Caption = #27599#38047#20250#21592#20215
+          Width = 94
         end
         item
           EditButtons = <>
           FieldName = 'SDAYPRICE'
           Footers = <>
           Title.Caption = #27599#38047#30333#22825#20215
+          Width = 100
         end
         item
           EditButtons = <>
           FieldName = 'SNIGHTPRICE'
           Footers = <>
           Title.Caption = #27599#38047#26202#19978#20215
+          Width = 107
         end
         item
           EditButtons = <>
           FieldName = 'SVIPPRICE'
           Footers = <>
           Title.Caption = #27599#38047#36149#23486#20215
+          Width = 102
         end
         item
           EditButtons = <>
           FieldName = 'TGPRICE'
           Footers = <>
           Title.Caption = #27599#38047#22242#36141#20215
+          Width = 101
+        end
+        item
+          EditButtons = <>
+          FieldName = 'TJSCODES'
+          Footers = <>
+          Title.Caption = #23545#24212#26381#21153#39033#32534#30721
+          Width = 262
         end>
     end
     inherited stxt: TStaticText
@@ -1869,9 +1887,19 @@ object frmServiceProject: TfrmServiceProject
       Caption = #22522#26412#26381#21153#39033#30446#26159#20316#20026#22522#26412#32452#21512#39033#30446#30340#20998#31867#12290
     end
   end
+  object RzBitBtn1: TRzBitBtn
+    Left = 96
+    Top = 76
+    Width = 113
+    Height = 29
+    Caption = #25253#34920#31867#21035#32479#35745#35774#32622
+    TabOrder = 1
+    OnClick = RzBitBtn1Click
+  end
   object ds_service: TDataSource
+    AutoEdit = False
     DataSet = zquery_service
-    Left = 365
+    Left = 409
     Top = 20
   end
   object zquery_service: TZQuery

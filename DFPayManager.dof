@@ -135,8 +135,10 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
+C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\EhLibDataDrivers70.bpl=(untitled)
+C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\EhLib70.bpl=EhLib 5.2
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tmsd7.bpl=TMS Component Pack
-C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\tmsexd7.bpl=TMS Component Pack Extra
+c:\program files (x86)\borland\delphi7\Projects\Bpl\tmsexd7.bpl=TMS Component Pack Extra
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tmsded7.bpl=TMS Component Pack design time support
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tmsxlsd7.bpl=TMS TAdvStringGrid Excel support
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tmswizd7.bpl=TMS Component Pack Wizards

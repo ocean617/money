@@ -1182,6 +1182,7 @@ object NewOrderFrm: TNewOrderFrm
         Height = 20
         ItemHeight = 12
         TabOrder = 1
+        OnChange = TjItem_1Change
       end
       object TjCount_1: TComboBox
         Left = 157
@@ -1215,6 +1216,7 @@ object NewOrderFrm: TNewOrderFrm
         Color = 16772055
         ItemHeight = 12
         TabOrder = 4
+        OnChange = TjItem_1Change
       end
       object TjCount_2: TComboBox
         Left = 157
@@ -1249,6 +1251,7 @@ object NewOrderFrm: TNewOrderFrm
         Height = 20
         ItemHeight = 12
         TabOrder = 7
+        OnChange = TjItem_1Change
       end
       object TjCount_3: TComboBox
         Left = 157
@@ -1291,6 +1294,7 @@ object NewOrderFrm: TNewOrderFrm
         Color = 16772055
         ItemHeight = 12
         TabOrder = 10
+        OnChange = TjItem_1Change
       end
       object TjName_4: TComboBox
         Left = 212
