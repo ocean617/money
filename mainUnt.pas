@@ -292,7 +292,7 @@ var
 begin
   tmpqy:= TZQuery.Create(nil);
   tmpqy.Connection:=conn;
-  tmpqy.SQL.Add('select count(*) ct from tb_members where year(MBIRTHDAY)=year(now()) and month(MBIRTHDAY)=month(now())');
+  tmpqy.SQL.Add('select count(*) ct from tb_members where month(MBIRTHDAY)=month(now()) and day(MBIRTHDAY)=day(now())');
   tmpqy.Open;
 
   if (tmpqy.FieldByName('ct').AsInteger>0) then
@@ -301,7 +301,7 @@ begin
         //ShowMessage('今天有'+tmpqy.FieldByName('ct').AsString+'个会员生日.');
         if birthday_qy.Active then birthday_qy.Close;
         birthday_qy.SQL.Clear;
-        birthday_qy.SQL.Add('select MNAME as "姓名",MCSHOWID as "卡号" ,MGENDER as "性别",MPHONE as "电话" from tb_members where year(MBIRTHDAY)=year(now()) and month(MBIRTHDAY)=month(now())');
+        birthday_qy.SQL.Add('select MNAME as "姓名",MCSHOWID as "卡号" ,MGENDER as "性别",MPHONE as "电话" from tb_members where month(MBIRTHDAY)=month(now()) and day(MBIRTHDAY)=day(now())');
         birthday_qy.Open;
         
       end;

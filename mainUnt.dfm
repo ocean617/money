@@ -3,7 +3,7 @@ object mainfrm: Tmainfrm
   Top = 55
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
-  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20170304)'
+  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20170309)'
   ClientHeight = 600
   ClientWidth = 800
   Color = clBtnFace
@@ -16521,7 +16521,7 @@ object mainfrm: Tmainfrm
     Top = 580
     Width = 154
     Height = 14
-    Caption = #26368#21518#26356#26032#26085#26399#65306'20170304'
+    Caption = #26368#21518#26356#26032#26085#26399#65306'20170309'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -14

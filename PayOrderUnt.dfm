@@ -1951,7 +1951,7 @@ object PayOrderFrm: TPayOrderFrm
       Left = 58
       Top = 31
       Width = 159
-      Height = 20
+      Height = 24
       Ctl3D = True
       Font.Charset = GB2312_CHARSET
       Font.Color = clWindowText
@@ -1969,7 +1969,7 @@ object PayOrderFrm: TPayOrderFrm
       Left = 58
       Top = 57
       Width = 159
-      Height = 19
+      Height = 24
       Ctl3D = True
       Font.Charset = GB2312_CHARSET
       Font.Color = clWindowText
@@ -2049,9 +2049,9 @@ object PayOrderFrm: TPayOrderFrm
   end
   object member_card_query_panel: TRzPanel
     Left = 512
-    Top = 492
+    Top = 416
     Width = 229
-    Height = 143
+    Height = 219
     BevelWidth = 2
     BorderOuter = fsBump
     BorderColor = 16768185
@@ -2165,7 +2165,7 @@ object PayOrderFrm: TPayOrderFrm
     end
     object RzBitBtn2: TRzBitBtn
       Left = 152
-      Top = 116
+      Top = 188
       Width = 69
       Height = 24
       FrameColor = 7617536
@@ -2227,26 +2227,6 @@ object PayOrderFrm: TPayOrderFrm
         E8101717101010101010E8E8E8E8E8E8E8568181DFDFDFDFDFDF}
       NumGlyphs = 2
     end
-    object cardnum_edt: TRzEdit
-      Left = 58
-      Top = 90
-      Width = 163
-      Height = 24
-      Color = 8453888
-      Ctl3D = True
-      Font.Charset = GB2312_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Fixedsys'
-      Font.Style = [fsBold]
-      FrameColor = clBlue
-      FrameHotStyle = fsRaised
-      ParentCtl3D = False
-      ParentFont = False
-      ReadOnly = True
-      ReadOnlyColor = 8453888
-      TabOrder = 4
-    end
     object RzBitBtn3: TRzBitBtn
       Left = 166
       Top = 62
@@ -2255,7 +2235,7 @@ object PayOrderFrm: TPayOrderFrm
       Caption = #26597#35810
       Color = 15791348
       HotTrack = True
-      TabOrder = 5
+      TabOrder = 4
       OnClick = RzBitBtn3Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -2309,6 +2289,14 @@ object PayOrderFrm: TPayOrderFrm
         5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+    end
+    object cardnum_edt: TMemo
+      Left = 56
+      Top = 96
+      Width = 161
+      Height = 89
+      ReadOnly = True
+      TabOrder = 5
     end
   end
   object item_ds: TDataSource

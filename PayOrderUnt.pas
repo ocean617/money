@@ -125,8 +125,8 @@ type
     phone_edt: TRzEdit;
     RzBitBtn2: TRzBitBtn;
     Label11: TLabel;
-    cardnum_edt: TRzEdit;
     RzBitBtn3: TRzBitBtn;
+    cardnum_edt: TMemo;
     procedure SaveOrder_btClick(Sender: TObject);
     procedure qry_btClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -1215,6 +1215,7 @@ end;
 procedure TPayOrderFrm.RzBitBtn3Click(Sender: TObject);
 var
   qry:Tzquery;
+  i:integer;
 begin
 //用户名密码判断
  if (length(trim(passedt1.Text))<=0) then
@@ -1265,7 +1266,7 @@ if qry.Active then qry.Free;
 //根据手机号查询会员编号
   qry:=Tzquery.Create(self);
   qry.Connection:=mainfrm.conn;
-  qry.SQL.Add('select MCID from tb_members where MPHONE=:p limit 1' );
+  qry.SQL.Add('select MCID,MMONEY from tb_members where MPHONE=:p and MGQDATE>now()' );
   qry.ParamByName('p').AsString:=trim(phone_edt.Text);
   qry.Open;
   if qry.IsEmpty then
@@ -1276,7 +1277,13 @@ if qry.Active then qry.Free;
     end
   else
     begin
-      cardnum_edt.Text:=qry.fieldbyname('MCID').AsString;
+      qry.First;
+      for i:=0 to qry.recordcount-1 do
+      begin
+         cardnum_edt.Text:= cardnum_edt.Text+ qry.fieldbyname('MCID').AsString+'[余额:'+qry.fieldbyname('MMONEY').AsString+']';
+         qry.Next;
+      end;
+
       qry.Close;
       qry.Free;
     end;
