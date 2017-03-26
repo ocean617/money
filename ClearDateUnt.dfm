@@ -3,7 +3,7 @@ object clearDatafrm: TclearDatafrm
   Top = 288
   BorderStyle = bsSingle
   Caption = #21024#38500#25968#25454
-  ClientHeight = 189
+  ClientHeight = 191
   ClientWidth = 289
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -91,7 +91,7 @@ object clearDatafrm: TclearDatafrm
     Left = 87
     Top = 9
     Width = 173
-    Height = 20
+    Height = 21
     EditButtons = <>
     TabOrder = 5
     Visible = True
@@ -101,10 +101,19 @@ object clearDatafrm: TclearDatafrm
     Left = 87
     Top = 41
     Width = 174
-    Height = 20
+    Height = 21
     EditButtons = <>
     TabOrder = 6
     Visible = True
     EditFormat = 'YYYY-MM-DD HH:NN:SS'
+  end
+  object RzCheckBox4: TRzCheckBox
+    Left = 156
+    Top = 72
+    Width = 129
+    Height = 28
+    Caption = #20250#21592#25152#26377#31215#20998#28165#38646
+    State = cbUnchecked
+    TabOrder = 7
   end
 end

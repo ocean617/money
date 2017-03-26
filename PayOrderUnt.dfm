@@ -347,7 +347,7 @@ object PayOrderFrm: TPayOrderFrm
     end
     object comm_pay_bt: TRzBitBtn
       Left = 740
-      Top = 5
+      Top = 6
       Width = 112
       Height = 29
       FrameColor = 7617536
@@ -476,7 +476,7 @@ object PayOrderFrm: TPayOrderFrm
     end
     object memberCardQueryBtn: TRzBitBtn
       Left = 620
-      Top = 5
+      Top = 6
       Width = 120
       Height = 29
       FrameColor = 7617536

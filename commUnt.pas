@@ -56,7 +56,7 @@ unit commUnt;
 interface
 
 uses windows,messages, SysUtils, Variants, Classes,ActiveX,StrUtils,DB, ZAbstractRODataset,
-  ZAbstractDataset, ZDataset,ZConnection,RzLabel,DateUtils,Controls,MSHTML,OleCtrls, SHDocVw,Math;
+  ZAbstractDataset, ZDataset,ZConnection,RzLabel,DateUtils,Controls,MSHTML,OleCtrls, SHDocVw,Math,TLoggerUnit;
 const
   XorKey:array[0..7] of Byte=($B2,$08,$AA,$55,$93,$6D,$84,$47); //字符串加密用
 
@@ -88,6 +88,7 @@ const
    function getID(sql:string):string;
    {判断是否有效日期}
    function IsDate(dateStr:string):boolean;
+    
 
 implementation
 
@@ -312,6 +313,7 @@ var
   qry:tzquery;
   ret_value:real;
 begin
+  TLogger.GetInstance.Debug('begin getCount:'+sql);
   qry:=tzquery.Create(nil);
   qry.Connection:=mainfrm.conn;
   ret_value:=0.0;
@@ -320,6 +322,8 @@ begin
   qry.ParamCheck:=false;
   qry.SQL.Add(sql);
   qry.Open;
+  TLogger.GetInstance.Debug('end getCount:'+sql);
+  
   //ret_value := Round(qry.fieldbyname('scount').AsFloat,2);
   ret_value :=  qry.fieldbyname('scount').AsFloat;
   except
@@ -355,5 +359,6 @@ except
   result :=false;
 end;
 end;
+
 
 end.

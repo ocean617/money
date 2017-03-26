@@ -54,9 +54,13 @@ var
  last_banlance,last_banlance1:Real;
  //当前订单编号
  current_order_oid:string;
+ //打印变量
+ tmp_MCSHOWID,tmp_MMONEY:string;
+ sms_content,send_content,phone,jf,mname:string;
 begin
  last_banlance :=0.0;
  last_banlance1 :=0.0;
+ sms_content:='尊敬的{会员姓名}会员，您卡号为{会员卡号}于{消费时间}消费{消费金额}元，余额{金额}元，现在的总积分为{积分余额},感谢您的支持，欢迎下次光临！';
  
 if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) then
   begin
@@ -306,8 +310,30 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
           payType:=pfrm.OrderpayTypeCmb.Text;
           if payType='刷会员卡' then
             begin
-              payType := payType+' 卡号:'+getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.text+'''')+' 本次余额：'+floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.Text+''''));
-              payType := payType +#13#10+'上次余额：'+floattostr(Roundto(last_banlance,-2))
+              tmp_MCSHOWID:=getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.text+'''');
+              tmp_MMONEY:=floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.Text+''''));
+              payType := payType+' 卡号:'+tmp_MCSHOWID+' 本次余额：'+tmp_MMONEY;
+              payType := payType +#13#10+'上次余额：'+floattostr(Roundto(last_banlance,-2));
+
+              //进行团体消费的短信提醒
+              send_content:=  StringReplace(sms_content,'{会员卡号}',tmp_MCSHOWID,[rfReplaceAll]);
+              send_content := StringReplace(send_content,'{消费时间}',FormatdateTime('c',now),[rfReplaceAll]);
+              send_content := StringReplace(send_content,' ','_',[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{消费金额}',sj_count_edt.Text,[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{金额}', tmp_MMONEY,[rfReplaceAll]);
+              //发送短信
+              phone:= getID('select MPHONE as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.text+'''');
+              mname:= getID('select MNAME as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.text+'''');
+              jf :=   getID('select MJF as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit9.text+'''');
+
+              send_content:=  StringReplace(send_content,'{会员姓名}', mname,[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{积分余额}', jf,[rfReplaceAll]);              
+              try
+               if length(phone)>0 then
+                 mainfrm.sendsms(phone,send_content);
+              except
+              end;
+              
             end
           else if (pfrm.order_qy.FieldByName('OSPAYTYPESUM').AsFloat>0) then
             begin
@@ -317,8 +343,29 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
           payType1:=  pfrm.OrderpayTypeCmb1.Text;
           if pfrm.OrderpayTypeCmb1.Text='刷会员卡' then
             begin
-              payType1 := payType1+' 卡号:'+getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.text+'''')+' 余额：'+floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.Text+''''));
+              tmp_MCSHOWID:=getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.text+'''');
+              tmp_MMONEY:=floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.Text+''''));
+              payType1 := payType1+' 卡号:'+tmp_MCSHOWID+' 余额：'+tmp_MMONEY;
               payType1 := payType1 +#13#10+'上次余额：'+floattostr(Roundto(last_banlance1,-2));
+              //进行团体消费的短信提醒
+              send_content:=  StringReplace(sms_content,'{会员卡号}',tmp_MCSHOWID,[rfReplaceAll]);
+              send_content := StringReplace(send_content,'{消费时间}',FormatdateTime('c',now),[rfReplaceAll]);
+              send_content := StringReplace(send_content,' ','_',[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{消费金额}',sj_count_edt.Text,[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{金额}', tmp_MMONEY,[rfReplaceAll]);
+              //发送短信
+              phone:= getID('select MPHONE as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.text+'''');
+              mname:= getID('select MNAME as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.text+'''');
+              jf :=   getID('select MJF as ID from TB_MEMBERS where MCID='''+pfrm.RzDBEdit1.text+'''');
+
+              send_content:=  StringReplace(send_content,'{会员姓名}', mname,[rfReplaceAll]);
+              send_content:=  StringReplace(send_content,'{积分余额}', jf,[rfReplaceAll]);              
+              try
+               if length(phone)>0 then
+                 mainfrm.sendsms(phone,send_content);
+              except
+              end;
+              
             end
             
            else if (pfrm.order_qy.FieldByName('OSPAYTYPE1SUM').AsFloat>0) then
@@ -366,7 +413,7 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
       end;
       
      pfrm.order_qy.Close;
-     messagebox(0,'已经成功结单.','提示',mb_iconinformation);
+     messagebox(0,'已经成功结单并已经发送消费短信.','提示',mb_iconinformation);
      close;
     except
       on E:Exception do

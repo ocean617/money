@@ -502,8 +502,13 @@ var
  last_banlance,last_banlance1:Real;
  i:integer;
  tmpvalue,totalsum:real;
+ //打印变量
+ tmp_MCSHOWID,tmp_MMONEY:string;
+ sms_content,send_content,phone,jf,mname:string;
 begin
 if not RzDBEdit6.DataSource.DataSet.Active then exit;
+sms_content :='尊敬的{会员姓名}会员，您卡号为{会员卡号}于{消费时间}消费{消费金额}元，余额{金额}元，现在的总积分为{积分余额},感谢您的支持，欢迎下次光临！';
+ 
 //先保存
 try
 if order_qy.state in [dsEdit,dsInsert] then
@@ -705,8 +710,30 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
               if ((trim(OrderpayTypeCmb.Text)='刷会员卡') and (Length(order_qy.FieldByName('MCID').AsString)>0)) then
                  begin
                     //得到余额
-                    tmpstr :='卡号:'+getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID').AsString+'''')+' 本次余额:'+floattostr(roundto(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+ order_qy.fieldbyname('MCID').AsString+''''),-2));
+                    tmp_MCSHOWID:=getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID').AsString+'''');
+                    tmp_MMONEY:= floattostr(roundto(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+ order_qy.fieldbyname('MCID').AsString+''''),-2));
+                    tmpstr :='卡号:'+tmp_MCSHOWID+' 本次余额:'+tmp_MMONEY;
                     tmpstr := tmpstr +#13#10+'上次余额：'+floattostr(Roundto(last_banlance,-2));
+                    //发送短信
+
+                    send_content:=  StringReplace(sms_content,'{会员卡号}',tmp_MCSHOWID,[rfReplaceAll]);
+                    send_content := StringReplace(send_content,'{消费时间}',FormatdateTime('c',now),[rfReplaceAll]);
+                    send_content := StringReplace(send_content,' ','_',[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{消费金额}',total_edt.Text,[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{金额}', tmp_MMONEY,[rfReplaceAll]);
+                    //发送短信
+                    phone:= getID('select MPHONE as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID').AsString+'''');
+                    mname:= getID('select MNAME as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID').AsString+'''');
+                    jf :=   getID('select MJF as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID').AsString+'''');
+
+                    send_content:=  StringReplace(send_content,'{会员姓名}', mname,[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{积分余额}', jf,[rfReplaceAll]);
+                    try
+                     if length(phone)>0 then
+                       mainfrm.sendsms(phone,send_content);
+                    except
+                    end;
+
                  end
               else if (order_qy.FieldByName('OSPAYTYPESUM').AsFloat>0) then
                 begin
@@ -716,8 +743,31 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
 
               if ((trim(OrderpayTypeCmb1.Text)='刷会员卡') and (Length(order_qy.FieldByName('MCID1').AsString)>0)) then
                  begin
-                   tmpstr1 :=  '卡号:'+getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID1').AsString+'''')+' 余额:'+floattostr(roundto(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+ order_qy.fieldbyname('MCID1').AsString+''''),-2));
+                   tmp_MCSHOWID:=getID('select MCSHOWID as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID1').AsString+'''');
+                   tmp_MMONEY:= floattostr(roundto(getCount('select MMONEY as scount from TB_MEMBERS where MCID='''+ order_qy.fieldbyname('MCID1').AsString+''''),-2));
+
+                   tmpstr1 :=  '卡号:'+tmp_MCSHOWID+' 余额:'+tmp_MMONEY;
                    tmpstr1 := tmpstr1 +#13#10+'上次余额：'+floattostr(Roundto(last_banlance1,-2));
+
+                   //发送短信
+                    send_content:=  StringReplace(sms_content,'{会员卡号}',tmp_MCSHOWID,[rfReplaceAll]);
+                    send_content := StringReplace(send_content,'{消费时间}',FormatdateTime('c',now),[rfReplaceAll]);
+                    send_content := StringReplace(send_content,' ','_',[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{消费金额}',total_edt.Text,[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{金额}', tmp_MMONEY,[rfReplaceAll]);
+                    //发送短信
+                    phone:= getID('select MPHONE as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID1').AsString+'''');
+                    mname:= getID('select MNAME as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID1').AsString+'''');
+                    jf :=   getID('select MJF as ID from TB_MEMBERS where MCID='''+order_qy.FieldByName('MCID1').AsString+'''');
+
+                    send_content:=  StringReplace(send_content,'{会员姓名}', mname,[rfReplaceAll]);
+                    send_content:=  StringReplace(send_content,'{积分余额}', jf,[rfReplaceAll]);
+                    try
+                     if length(phone)>0 then
+                       mainfrm.sendsms(phone,send_content);
+                    except
+                    end;
+                     
                  end
                else if (order_qy.FieldByName('OSPAYTYPE1SUM').AsFloat>0) then
                 begin
@@ -761,7 +811,7 @@ if (messagebox(0,'您确认要结帐吗？','提示',mb_iconquestion+mb_yesno)=id_yes) the
      end;
      
      order_qy.Close;
-     messagebox(0,'已经成功结单.','提示',mb_iconinformation);
+     messagebox(0,'已经成功结单并已经发送消费短信.','提示',mb_iconinformation);
      getAllOrders;
      updateZdLabel;
      
@@ -813,7 +863,8 @@ if comm_order_qy.RecordCount=0 then
     messagebox(0,'该单不是团体单，请直接结帐即可.','提示',mb_iconinformation);
     exit;
   end;
-  
+
+   
 //保存数据
 try
 if order_qy.state in [dsEdit,dsInsert] then
@@ -829,7 +880,7 @@ self.orderState:='结单';
  d_numstr:='';
  
  CommPayHitsFrm:= TCommPayHitsFrm.Create(self);
- CommPayHitsFrm.pfrm:=self; 
+ CommPayHitsFrm.pfrm:=self;
 
  //赋值
  CommPayHitsFrm.scount_label.Caption:=inttostr(comm_order_qy.RecordCount+1);
@@ -1125,6 +1176,8 @@ end;
 
 procedure TPayOrderFrm.changeAmoutBtClick(Sender: TObject);
 begin
+
+newAmount_edt.Text:='';
 //由部长修改消费金额
 amout_change_panel.Show;
 

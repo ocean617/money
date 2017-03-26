@@ -282,9 +282,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 4
+      ItemIndex = 7
       TabOrder = 1
-      Text = '2014'
+      Text = '2017'
       Items.Strings = (
         '2013'
         '2010'
@@ -425,9 +425,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 4
+      ItemIndex = 7
       TabOrder = 1
-      Text = '2014'
+      Text = '2017'
       Items.Strings = (
         '2013'
         '2010'
@@ -693,9 +693,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 6
+      ItemIndex = 7
       TabOrder = 0
-      Text = '2016'
+      Text = '2017'
       Items.Strings = (
         '2013'
         '2010'
@@ -836,9 +836,9 @@ object ReportFrm: TReportFrm
       Height = 20
       Style = csDropDownList
       ItemHeight = 12
-      ItemIndex = 6
+      ItemIndex = 7
       TabOrder = 1
-      Text = '2016'
+      Text = '2017'
       Items.Strings = (
         '2014'
         '2010'

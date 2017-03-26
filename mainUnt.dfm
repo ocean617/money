@@ -1,9 +1,9 @@
 object mainfrm: Tmainfrm
-  Left = 294
-  Top = 55
+  Left = 289
+  Top = 44
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
-  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20170309)'
+  Caption = #19996#26041#24179#34913#20445#20581#25910#38134#31649#29702#31995#32479'(20170312)'
   ClientHeight = 600
   ClientWidth = 800
   Color = clBtnFace
@@ -16460,7 +16460,7 @@ object mainfrm: Tmainfrm
     Transparent = True
   end
   object Label1: TLabel
-    Left = 40
+    Left = 28
     Top = 544
     Width = 429
     Height = 14
@@ -16521,7 +16521,7 @@ object mainfrm: Tmainfrm
     Top = 580
     Width = 154
     Height = 14
-    Caption = #26368#21518#26356#26032#26085#26399#65306'20170309'
+    Caption = #26368#21518#26356#26032#26085#26399#65306'20170312'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -14

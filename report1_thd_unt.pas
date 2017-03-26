@@ -59,8 +59,9 @@ frm.pbar.Update;
 
 //将数据导入Excel
 try
+//    CoInitialize(nil);
     excel:= CreateOleObject('Excel.Application');
-
+    excel.Visible := true;//是否显示
     excel.workbooks.open(tfilename);
     
     Sheet:= excel.Workbooks[1].WorkSheets[1];
@@ -231,7 +232,9 @@ try
 
   frm.pbar.PartsComplete:=0;
   frm.pbar.Update;
-  excel.Visible := true;//是否显示
+//  excel.Visible  := t;//是否显示
+  
+ // CoUninitialize();
 end;
 
 end.

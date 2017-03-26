@@ -36,6 +36,8 @@ type
       Shift: TShiftState);
   private
     mid,mname,mcid,mcshowid:string;
+    //会员手机号
+    phone:string;
     { Private declarations }
   public
     { Public declarations }
@@ -74,17 +76,26 @@ if key=#13 then
      mname:=qry.fieldbyname('MNAME').AsString;
      mcid:=qry.fieldbyname('MCID').AsString;
      mcshowid:=qry.fieldbyname('MCSHOWID').AsString;
-    qry.Close;
-    czbt.Enabled:=true; 
+     //记录电话号码
+     phone := qry.fieldbyname('MPHONE').AsString;
+     
+     qry.Close;
+     czbt.Enabled:=true; 
   end;
 end;
 
 procedure TMemberAddMoneyFrm.czbtClick(Sender: TObject);
 var
  s:real;
- sql:string;
+ sql,sms,sms_result:string;
 begin
  if qry.Active then qry.Close;
+ sms_result:='';
+ //发送短信
+ sms :='尊敬的{会员姓名}会员，您于{充值时间}充值{充值金额}元，您的余额是{金额}元，感谢您的支持，欢迎下次光临！';
+ sms := StringReplace(sms,'{会员姓名}',mname,[rfReplaceAll]);
+ sms := StringReplace(sms,'{充值时间}',FormatdateTime('c',now),[rfReplaceAll]);
+ sms := StringReplace(sms,' ','_',[rfReplaceAll]);
 
  if (mtype_cmb.Text='积分赠送') then
    begin
@@ -132,7 +143,9 @@ begin
  qry.FieldByName('MTYPE').AsString:=trim(mtype_cmb.Text);
  
  qry.Post;
-
+ sms := StringReplace(sms,'{充值金额}',floattostr(s),[rfReplaceAll]);
+ sms := StringReplace(sms,'{金额}',floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MID='''+mid+'''')),[rfReplaceAll]);
+ 
  //更新会员余额表
  qry.Close;
  qry.SQL.Clear;
@@ -161,7 +174,15 @@ begin
     qry.ExecSQL;
   end;
 
- messagebox(0,'会员已经成功充值！','提示',mb_iconinformation);
+ if(length(phone)>0) then
+ begin
+   if (mainfrm.sendsms(phone,sms)) then
+      sms_result:='短信发送成功!'
+   else
+      sms_result:='短信发送失败!';
+ end;
+
+ messagebox(0,pchar('会员已经成功充值！'+sms_result),'提示',mb_iconinformation);
  cardId_edt.Clear;
  czbt.Enabled:=false;
  
@@ -217,12 +238,12 @@ if ((Length(jf_edt.Text)>0) and (Length(czjf_edt.Text)>0) ) then
           if (jf>=10000) then
             begin
               jf_sum := trunc(jf/10000);
-              num_edt.Text:=IntToStr(jf_sum*300);
+              num_edt.Text:=IntToStr(jf_sum*200);
             end
           else if (jf>=5000) then
             begin
                jf_sum := trunc(jf/5000);
-               num_edt.Text:=IntToStr(jf_sum*100);
+               num_edt.Text:=IntToStr(jf_sum*80);
             end
           else if (jf>=3000) then
             begin

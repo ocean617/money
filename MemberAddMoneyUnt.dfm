@@ -4,7 +4,7 @@ object MemberAddMoneyFrm: TMemberAddMoneyFrm
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = #20250#21592#20805#20540
-  ClientHeight = 264
+  ClientHeight = 269
   ClientWidth = 397
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET

@@ -18,6 +18,7 @@ type
     edate: TDBDateTimeEditEh;
     Label1: TLabel;
     Bevel1: TBevel;
+    RzCheckBox4: TRzCheckBox;
     procedure RzButton2Click(Sender: TObject);
     procedure RzButton1Click(Sender: TObject);
   private
@@ -47,6 +48,14 @@ var
 begin
 if messagebox(0,'该操作将删除选定的数据，清空后将不可恢复！！请确认是否要删除？','提示',mb_iconquestion+mb_yesno)=id_yes then
    begin
+   
+    if RzCheckBox4.Checked then
+       begin
+         sqlstr:= 'update tb_members set MJF=0 ';
+         exeSql(sqlstr);
+         messagebox(0,pchar('会员积分已经全部清零!'),'提示',mb_iconinformation);
+       end;
+       
     s:=AnsireplaceStr(sdate.Text,'-','');
     s:=trim(AnsireplaceStr(s,':',''));
     if length(s)=0 then
