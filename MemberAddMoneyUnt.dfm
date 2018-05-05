@@ -1,6 +1,6 @@
 object MemberAddMoneyFrm: TMemberAddMoneyFrm
-  Left = 511
-  Top = 257
+  Left = 510
+  Top = 236
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = #20250#21592#20805#20540
@@ -60,7 +60,7 @@ object MemberAddMoneyFrm: TMemberAddMoneyFrm
       Width = 141
       Height = 12
       AutoSize = False
-      Caption = #20805#20540#37329#39069'('#26368#22823#20540#20026'5000)'
+      Caption = #20805#20540#37329#39069'('#26368#22823#20540#20026'2'#19975')'
       Transparent = True
     end
     object Label3: TLabel

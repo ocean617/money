@@ -1319,7 +1319,7 @@ if qry.Active then qry.Free;
 //根据手机号查询会员编号
   qry:=Tzquery.Create(self);
   qry.Connection:=mainfrm.conn;
-  qry.SQL.Add('select MCID,MMONEY from tb_members where MPHONE=:p and MGQDATE>now()' );
+  qry.SQL.Add('select MCID,MMONEY,MCSHOWID from tb_members where MPHONE=:p and MGQDATE>now()' );
   qry.ParamByName('p').AsString:=trim(phone_edt.Text);
   qry.Open;
   if qry.IsEmpty then
@@ -1333,7 +1333,7 @@ if qry.Active then qry.Free;
       qry.First;
       for i:=0 to qry.recordcount-1 do
       begin
-         cardnum_edt.Text:= cardnum_edt.Text+ qry.fieldbyname('MCID').AsString+'[余额:'+qry.fieldbyname('MMONEY').AsString+']';
+         cardnum_edt.Text:= cardnum_edt.Text+ qry.fieldbyname('MCSHOWID').AsString+'[余额:'+qry.fieldbyname('MMONEY').AsString+']';
          qry.Next;
       end;
 

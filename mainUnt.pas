@@ -383,7 +383,7 @@ begin
     si.cb:= SizeOf(si);
     cpath := extractfilePath(application.ExeName);
    
-  if not CreateProcess(nil, pchar('jre\bin\javaw.exe -jar sms.jar '+phone+' °æ∫ÕÀ≥Ã√°ø'+text), nil,  
+  if not CreateProcess(nil, pchar('jre\bin\javaw.exe -jar sms.jar '+phone+' '+text+'°æ∫ÕÀ≥Ã√°ø'), nil,  
                        nil, False, 0, nil, PChar(cpath), si, pi) then
                        begin
                          retvalue:=false;

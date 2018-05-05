@@ -119,9 +119,9 @@ begin
    end;
  end;
 
- if s>5000 then
+ if s>20000 then
    begin
-     Messagebox(0,'每次充值数不能大于５０００.','提示',mb_iconerror);
+     Messagebox(0,'每次充值数不能大于2万.','提示',mb_iconerror);
      exit;
    end;
 
@@ -143,9 +143,7 @@ begin
  qry.FieldByName('MTYPE').AsString:=trim(mtype_cmb.Text);
  
  qry.Post;
- sms := StringReplace(sms,'{充值金额}',floattostr(s),[rfReplaceAll]);
- sms := StringReplace(sms,'{金额}',floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MID='''+mid+'''')),[rfReplaceAll]);
- 
+
  //更新会员余额表
  qry.Close;
  qry.SQL.Clear;
@@ -158,7 +156,7 @@ begin
      sql := 'update TB_MEMBERS set MGQDATE=DATE_ADD(now(),INTERVAL 2 YEAR) where MID='''+mid+'''';
    end
  else
-     sql := 'update TB_MEMBERS set MGQDATE=DATE_ADD(now(),INTERVAL 1 YEAR) where MID='''+mid+''''; 
+     sql := 'update TB_MEMBERS set MGQDATE=DATE_ADD(now(),INTERVAL 1 YEAR) where MID='''+mid+'''';
 
  qry.SQL.Clear;
  qry.SQL.Add(sql);
@@ -173,6 +171,9 @@ begin
     qry.SQL.Add(sql);
     qry.ExecSQL;
   end;
+
+ sms := StringReplace(sms,'{充值金额}',floattostr(s),[rfReplaceAll]);
+ sms := StringReplace(sms,'{金额}',floattostr(getCount('select MMONEY as scount from TB_MEMBERS where MID='''+mid+'''')),[rfReplaceAll]);
 
  if(length(phone)>0) then
  begin
@@ -235,6 +236,10 @@ if ((Length(jf_edt.Text)>0) and (Length(czjf_edt.Text)>0) ) then
 
           jf_sum:=0;
           jf:= strtofloat(czjf_edt.Text);
+          jf_sum := trunc(jf/100);
+          num_edt.Text:=IntToStr(jf_sum);
+
+          {
           if (jf>=10000) then
             begin
               jf_sum := trunc(jf/10000);
@@ -254,7 +259,7 @@ if ((Length(jf_edt.Text)>0) and (Length(czjf_edt.Text)>0) ) then
             begin
               num_edt.Text:='0';
             end;
-
+          }
       end
     except
     end;
