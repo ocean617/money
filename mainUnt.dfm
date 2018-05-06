@@ -22,9 +22,10 @@ object mainfrm: Tmainfrm
   TextHeight = 13
   object bg_img: TseImage
     Left = 0
-    Top = -4
+    Top = 0
     Width = 800
     Height = 600
+    Align = alClient
     AutoSize = True
     Picture.Data = {
       0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000032000

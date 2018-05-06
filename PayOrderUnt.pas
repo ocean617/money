@@ -127,6 +127,7 @@ type
     Label11: TLabel;
     RzBitBtn3: TRzBitBtn;
     cardnum_edt: TMemo;
+    Label12: TLabel;
     procedure SaveOrder_btClick(Sender: TObject);
     procedure qry_btClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -1333,7 +1334,9 @@ if qry.Active then qry.Free;
       qry.First;
       for i:=0 to qry.recordcount-1 do
       begin
-         cardnum_edt.Text:= cardnum_edt.Text+ qry.fieldbyname('MCSHOWID').AsString+'[”‡∂Ó:'+qry.fieldbyname('MMONEY').AsString+']';
+         cardnum_edt.Lines.Add('ø®√Ê±‡∫≈:'+ qry.fieldbyname('MCSHOWID').AsString);
+         cardnum_edt.Lines.Add('ø®∫≈£∫'+qry.fieldbyname('MCID').AsString);
+         cardnum_edt.Lines.Add('”‡∂Ó:'+qry.fieldbyname('MMONEY').AsString);
          qry.Next;
       end;
 

@@ -2119,6 +2119,20 @@ object PayOrderFrm: TPayOrderFrm
       ParentFont = False
       Transparent = True
     end
+    object Label12: TLabel
+      Left = 10
+      Top = 173
+      Width = 192
+      Height = 12
+      Caption = #27880#24847#65306#20250#21592#32467#24080#26102#35831#22797#21046#21345#21495#36807#21435#65281
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = #23435#20307
+      Font.Style = []
+      ParentFont = False
+      Transparent = True
+    end
     object uedt1: TComboBox
       Left = 58
       Top = 5
@@ -2294,7 +2308,7 @@ object PayOrderFrm: TPayOrderFrm
       Left = 56
       Top = 96
       Width = 161
-      Height = 89
+      Height = 73
       ReadOnly = True
       TabOrder = 5
     end
